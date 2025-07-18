@@ -1,14 +1,15 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
   };
 
-  outputs = inputs: {
-    nixosConfigurations.nixos = inputs.lib.nixosSystem {
-      modules = [
-        { nix.settings.experimental-features = ["nix-command" "flakes"]; }
-        ./configuration.nix
-      ];
+  outputs = { nixpkgs, ... }@inputs: {
+    nixosConfigurations = {
+      ares = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./configuration.nix
+        ];
+      };
     };
   }; 
 }
